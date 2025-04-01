@@ -1,0 +1,65 @@
+server:
+  port: 24000
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.36.62:30101/cms_jsbc_rd
+    username: root
+    password: mysql
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  jackson:
+    date-format: yyyy-MM-dd
+    deserialization:
+      ACCEPT_EMPTY_STRING_AS_NULL_OBJECT: true
+  data:
+    redis:
+      host: 192.168.36.62
+      port: 30017
+      database: 0
+      timeout: 3000
+      lettuce:
+        pool:
+          max-active: 100
+          max-wait: 10000
+          max-idle: 8
+          min-idle: 0
+      repositories:
+        enabled: false
+  freemarker:
+    enabled: true
+    cache: false
+    content-type: text/html
+    charset: UTF-8
+    suffix: .ftl
+    template-loader-path:
+      - classpath:/templates/java
+
+# swagger
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.chenyj.misc.controller
+
+# knife4j
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,env
